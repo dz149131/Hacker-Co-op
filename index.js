@@ -9,17 +9,8 @@ const port = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-	res.sendFile(__dirname + '/index.html');
-});
-
-app.get('/index.js', (req, res) => {
-	res.sendFile(__dirname + '/index.js');
-});
-
-app.post('/sendMessage', async (req, res) => {
+app.post('/api/sendMessage', async (req, res) => {
 	try {
 		const messageInput = req.body.message;
 
@@ -40,6 +31,4 @@ app.post('/sendMessage', async (req, res) => {
 	}
 });
 
-app.listen(port, () => {
-	console.log(`Server is running on port ${port}`);
-});
+module.exports = app;
