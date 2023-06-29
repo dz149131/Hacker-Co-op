@@ -1,16 +1,6 @@
-const express = require('express');
-const dotenv = require('dotenv');
 const axios = require('axios');
 
-dotenv.config();
-
-const app = express();
-const port = process.env.PORT || 3000;
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-app.post('/api/sendMessage', async (req, res) => {
+const handler = async (req, res) => {
 	try {
 		const messageInput = req.body.message;
 
@@ -24,11 +14,18 @@ app.post('/api/sendMessage', async (req, res) => {
 		await axios.post(endpoint, body, { headers });
 
 		console.log('Message sent successfully!');
-		res.sendStatus(200);
+		res.status(200).send('Message sent successfully!');
 	} catch (error) {
 		console.error('Failed to send message:', error);
-		res.sendStatus(500);
+		res.status(500).send('Failed to send message');
 	}
-});
+};
 
-module.exports = app;
+module.exports = (req, res) => {
+	if (req.url === '/api/sendMessage' && req.method === 'POST') {
+		return handler(req, res);
+	} else {
+		res.setHeader('Content-Type', 'text/html');
+		res.status(200).sendFile('index.html', { root: __dirname });
+	}
+};
