@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const handler = async (req, res) => {
 	try {
@@ -21,9 +21,9 @@ const handler = async (req, res) => {
 	}
 };
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
 	if (req.url === '/api/sendMessage' && req.method === 'POST') {
-		return handler(req, res);
+		await handler(req, res);
 	} else {
 		res.setHeader('Content-Type', 'text/html');
 		res.status(200).sendFile('index.html', { root: __dirname });
