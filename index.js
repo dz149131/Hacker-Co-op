@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios').default;
 
 const handler = async (req, res) => {
 	try {
