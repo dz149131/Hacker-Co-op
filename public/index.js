@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/index.js', (req, res) => {
-	res.sendFile(__dirname + '/index.js');
+	res.sendFile(__dirname + '/public/index.js');
 });
 
 app.post('/sendMessage', async (req, res) => {
