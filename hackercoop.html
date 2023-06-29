@@ -34,7 +34,7 @@
 					Authorization: 'Bearer ' + accessToken,
 					'Content-Type': 'application/json',
 				};
-				const body = JSON.stringify({ content: messageInput });
+				const body = JSON.stringify({ content: 'Message from wholemungbeans' + messageInput });
 
 				fetch(endpoint, {
 					method: 'POST',
