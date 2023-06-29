@@ -22,7 +22,7 @@ app.post('/sendMessage', async (req, res) => {
 		const endpoint = 'https://www.hackercoop.dev/api/boop';
 		const headers = {
 			Authorization: 'Bearer ' + process.env.SECRET_KEY,
-			'Content-Type': 'application/javascript',
+			'Content-Type': 'application/json',
 		};
 		const body = { content: 'Message from wholemungbeans: ' + messageInput };
 
