@@ -4,7 +4,7 @@ document.getElementById('messageForm').addEventListener('submit', (event) => {
 
 	fetch('/sendMessage', {
 		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
+		headers: { 'Content-Type': 'application/javascript' },
 		body: JSON.stringify({ message: messageInput }),
 	})
 		.then((response) => {
