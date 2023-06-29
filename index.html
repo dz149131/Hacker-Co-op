@@ -11,35 +11,28 @@
 			integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
 			crossorigin="anonymous"
 		/>
-		<link rel="stylesheet" href="hackercoop.css" />
 	</head>
-	<body class="custom-bg-color">
+	<body style="background-color: #14213d">
 		<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
 			<div class="container align-items-center text-center">
 				<h1 class="text-light border-bottom border-primary-subtle pb-2">Homework</h1>
-				<div class="mb-3 pt-3">
+				<form id="messageForm">
 					<input type="text" class="form-control" id="messageInput" placeholder="Enter a message.." />
-				</div>
-				<button type="submit" class="btn btn-success" onclick="sendMessage()">Send Message</button>
+
+					<button type="submit" class="btn btn-success mt-3">Send Message</button>
+				</form>
 			</div>
 		</div>
 
 		<script>
-			function sendMessage() {
+			document.getElementById('messageForm').addEventListener('submit', (event) => {
+				event.preventDefault();
 				const messageInput = document.getElementById('messageInput').value;
-				const accessToken = 'HackerSummer2023';
 
-				const endpoint = 'https://www.hackercoop.dev/api/boop';
-				const headers = {
-					Authorization: 'Bearer ' + accessToken,
-					'Content-Type': 'application/json',
-				};
-				const body = JSON.stringify({ content: 'Message from wholemungbeans' + messageInput });
-
-				fetch(endpoint, {
+				fetch('/sendMessage', {
 					method: 'POST',
-					headers: headers,
-					body: body,
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ message: messageInput }),
 				})
 					.then((response) => {
 						if (response.ok) {
@@ -51,8 +44,9 @@
 					.catch((error) => {
 						console.error('An error occurred:', error);
 					});
-			}
+			});
 		</script>
+		<script src="index.js"></script>
 		<script
 			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
