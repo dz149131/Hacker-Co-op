@@ -1,11 +1,11 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
 	return (
 		<main className="flex justify-center items-center min-h-screen">
 			<div className="container mx-auto flex flex-col items-center">
 				<h1 className="text-3xl font-medium border-b border-gray-400 mb-3 pb-1 text-white inline-block w-96">HOMEWORK</h1>
-
 				<form className="flex flex-col items-center" id="messageForm">
 					<input
 						className="w-96 px-3 py-2 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring focus:border-blue-500"
@@ -24,6 +24,12 @@ export default function Home() {
 				<Link className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="/new">
 					New Page
 				</Link>
+				<Image
+					src="/images/gfx100s_sample_04_thum-1.jpg" // Route of the image file
+					height={300} // Desired size with correct aspect ratio
+					width={300} // Desired size with correct aspect ratio
+					alt="Your Name"
+				></Image>
 			</div>
 		</main>
 	);
