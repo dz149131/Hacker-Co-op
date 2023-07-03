@@ -29,7 +29,7 @@ export default function Home() {
 		try {
 			const endpoint = 'https://www.hackercoop.dev/api/boop';
 			const headers = {
-				Authorization: `Bearer ${process.env.NEXT_PUBLIC_SECRET_KE}`,
+				Authorization: `Bearer ${process.env.NEXT_PUBLIC_SECRET_KEY}`,
 				'Content-Type': 'application/json',
 			};
 			const body = { content: 'Message from wholemungbeans: ' + message };
