@@ -1,19 +1,35 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
 	const [message, setMessage] = useState('');
+	const [sending, setSending] = useState(false);
+	const [success, setSuccess] = useState(false);
+	const [error, setError] = useState(false);
+	const [buttonText, setButtonText] = useState('Send Message');
+
+	const resetState = () => {
+		setSending(false);
+		setSuccess(false);
+		setError(false);
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
+		resetState();
+		toast.info('Sending message...', {
+			position: toast.POSITION.TOP_RIGHT,
+		});
+
 		try {
 			const endpoint = 'https://www.hackercoop.dev/api/boop';
 			const headers = {
-				Authorization: `Bearer ${process.env.NEXT_PUBLIC_SECRET_KEY}`,
+				Authorization: `Bearer ${process.env.NEXT_PUBLIC_SECRET_KE}`,
 				'Content-Type': 'application/json',
 			};
 			const body = { content: 'Message from wholemungbeans: ' + message };
@@ -22,14 +38,30 @@ export default function Home() {
 
 			console.log('Message sent successfully!');
 			setMessage('');
+			setSuccess(true);
+			setButtonText('Message Sent Successfully');
+			toast.success('Message sent successfully!', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
 		} catch (error) {
 			console.error('Failed to send message:', error);
+			setError(true);
+			setButtonText('Failed To Send');
+			toast.error('Failed to send message!', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+		} finally {
+			setSending(false);
+			setTimeout(() => {
+				setButtonText('Send Message');
+			}, 2000);
 		}
 	};
 
 	const handleChange = (e) => {
 		setMessage(e.target.value);
 	};
+
 	return (
 		<main className="flex justify-center items-center min-h-screen">
 			<div className="container mx-auto flex flex-col items-center">
@@ -47,19 +79,24 @@ export default function Home() {
 					<button
 						className="my-3 py-1.5 px-4 w-full max-w-xs transition-colors bg-gray-50 border active:bg-blue-800 font-medium border-gray-200 hover:text-white text-blue-600 hover:border-blue-700 rounded-lg hover:bg-blue-600 disabled:opacity-50"
 						type="submit"
+						disabled={message.trim() === ''}
 					>
-						Send Message
+						{buttonText}
 					</button>
 				</form>
-				<Link className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="/new">
-					New Page
+				<Link
+					className="block max-w-sm p-3 my-1 bg-white border border-gray-200 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+					href="https://github.com/dz149131"
+				>
+					Github
 				</Link>
-				<Image
-					src="/images/gfx100s_sample_04_thum-1.jpg" // Route of the image file
-					height={300} // Desired size with correct aspect ratio
-					width={300} // Desired size with correct aspect ratio
-					alt="Your Name"
-				></Image>
+				<Link
+					className="block max-w-sm p-3 my-1 bg-white border border-gray-200 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+					href="https://www.linkedin.com/in/da-nny-zhang/"
+				>
+					Linkedin
+				</Link>
+				<ToastContainer />
 			</div>
 		</main>
 	);
